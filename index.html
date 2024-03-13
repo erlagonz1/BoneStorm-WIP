@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoneStorm</title>
+    <script src="./lib/phaser.js"></script>
+    <!--Prefabs-->
+    <script src="./src/prefabs/P1.js"></script>
+    <script src="./src/prefabs/P2.js"></script>
+
+    <script src="./src/scenes/Load.js"></script>
+    <script src="./src/scenes/Keys.js"></script>
+    <script src="./src/scenes/Menu.js"></script>
+    <script src="./src/scenes/Tutorial.js"></script>
+    <script src="./src/scenes/Play.js"></script>
+    <script src="./src/scenes/GameOver.js"></script>
+    <script src="./src/main.js"></script>
+
+
+    <style>
+        body {
+            overflow-y: hidden;
+            background-color: black;
+        }
+
+        #gameCanvas {
+            min-height: 100vh;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="gameCanvas"></div>
+</body>
+</html>
