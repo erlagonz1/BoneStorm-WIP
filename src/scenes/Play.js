@@ -67,6 +67,22 @@ class Play extends Phaser.Scene {
         this.p2blocking = false
         this.p2blockTime = 0
 
+        //add punch counter so the players can't spam punches
+        this.p1PunchCount = 3
+        this.p2PunchCount = 3
+
+        //lock player movement when they punch
+        this.p1MoveLock = false
+        this.p2MoveLock = false
+
+        let timer = this.time.addEvent({
+            delay: 3000,
+            callback: this.addPunches,
+            callbackScope: this,
+            loop: true
+        })
+    
+
         //collider so the characters don't move past each other
         this.physics.add.collider(this.p1.body, this.p2.body, () => {
             
@@ -133,10 +149,10 @@ class Play extends Phaser.Scene {
         this.p1.setVelocityX(0)
 
         //move left and right
-        if(this.KEYS.P1LEFT.isDown) {
+        if(this.KEYS.P1LEFT.isDown && this.p1MoveLock == false) {
             this.p1.setVelocityX(-1 * this.PLAYER_VELOCITY)
             p1direction = 'left'
-        } else if(this.KEYS.P1RIGHT.isDown) {
+        } else if(this.KEYS.P1RIGHT.isDown && this.p1MoveLock == false) {
             this.p1.setVelocityX(1 * this.PLAYER_VELOCITY)
             p1direction = 'right'
         }
@@ -160,23 +176,29 @@ class Play extends Phaser.Scene {
         //reset block time if they are not holding the key down
         if (!this.KEYS.P1BLOCK.isDown) {
             this.p1blockTime = 0
+            this.p1blocking = false
         }
 
         //handle player attacking
-        if(Phaser.Input.Keyboard.JustDown(this.KEYS.P1ATK)) {
+        if(Phaser.Input.Keyboard.JustDown(this.KEYS.P1ATK) && this.p1PunchCount > 0) {
+            this.p1PunchCount -= 1
             if(Math.abs(this.p2.body.x - this.p1.body.x) <  70 && this.p2blocking == false) {
             this.p1.setVelocityX(0)
             this.punch.play()
             this.p2.subHealthCount()
             this.P2Health.setFrame(this.p2.getHealthCount())
-            //this.p2.x += 30
+            this.p2.x += 30
             } else {
                 this.p1.setVelocityX(0)
                 this.swish.play()
             }
-        }
-        if (this.KEYS.P1ATK.isDown) {
-            this.p1.setVelocityX(0)
+            this.p1MoveLock = true
+            let unlockP1 = this.time.addEvent({
+                delay: 1000,
+                callback: this.p1Unlock,
+                callbackScope: this,
+                loop: false
+            })
         }
 
         //player 2 inputs
@@ -186,10 +208,10 @@ class Play extends Phaser.Scene {
         this.p2.setVelocityX(0)
 
         //move left and right
-        if(this.KEYS.P2LEFT.isDown) {
+        if(this.KEYS.P2LEFT.isDown && this.p2MoveLock == false) {
             this.p2.setVelocityX(-1 * this.PLAYER_VELOCITY)
             p2direction = 'left'
-        } else if(this.KEYS.P2RIGHT.isDown) {
+        } else if(this.KEYS.P2RIGHT.isDown && this.p2MoveLock == false) {
             this.p2.setVelocityX(1 * this.PLAYER_VELOCITY)
             p2direction = 'right'
         }
@@ -212,23 +234,44 @@ class Play extends Phaser.Scene {
         //reset block time if they are not holding the key down
         if (!this.KEYS.P2BLOCK.isDown) {
             this.p2blockTime = 0
+            this.p2blocking = false
         }
 
         //handle player attacking
-        if(Phaser.Input.Keyboard.JustDown(this.KEYS.P2ATK)) {
+        if(Phaser.Input.Keyboard.JustDown(this.KEYS.P2ATK) && this.p2PunchCount > 0) {
+            this.p2PunchCount -= 1
             if(Math.abs(this.p2.body.x - this.p1.body.x) <  70 && this.p1blocking == false) {
             this.p2.setVelocityX(0)
             this.punch.play()
             this.p1.subHealthCount()
             this.P1Health.setFrame(this.p1.getHealthCount())
-            //this.p1.x += 30
+            this.p1.x -= 30
             } else {
-                this.p2.setVelocityX(0)
+                this.p2.setVelocityX(0) 
                 this.swish.play()
             }
+            this.p2MoveLock = true
+            let unlockP2 = this.time.addEvent({
+                delay: 1000,
+                callback: this.p2Unlock,
+                callbackScope: this,
+                loop: false
+            })
         }
-        if (this.KEYS.P2ATK.isDown) {
-            this.p2.setVelocityX(0)
-        }
+    }
+
+    addPunches() {
+        this.p1PunchCount += 3
+        this.p2PunchCount += 3
+        console.log(this.p1PunchCount)
+        console.log(this.p2PunchCount)
+    }
+
+    p1Unlock() {
+        this.p1MoveLock = false
+    }
+
+    p2Unlock() {
+        this.p2MoveLock = false
     }
 }

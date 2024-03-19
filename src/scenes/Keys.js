@@ -26,7 +26,7 @@ class Keys extends Phaser.Scene {
 
         let music = this.sound.add("background", {
             loop: true,
-            volume: .5
+            volume: .3
         })
 
         music.play()

@@ -31,8 +31,8 @@ class Tutorial extends Phaser.Scene {
         let RIGHT = this.add.sprite(game.config.width*4/5 - 15, game.config.height/2, 'RIGHT').setOrigin(.5).setScale(.5).setAlpha(0)
 
         // Instruction text
-        let  p1Text = this.add.bitmapText(game.config.width*3/10, game.config.height/2 + 160, 'reg', '[A] and [D] to move\n[W] to attack\n[S] to grab', 25, 1).setOrigin(.5).setAlpha(0)
-        let  p2Text = this.add.bitmapText(game.config.width*7/10, game.config.height/2 + 160, 'reg', '[LEFT] and [RIGHT] to move\n[UP] to attack\n[DOWN] to grab', 25, 1).setOrigin(.5).setAlpha(0)
+        let  p1Text = this.add.bitmapText(game.config.width*3/10, game.config.height/2 + 160, 'reg', '[A] and [D] to move\n[W] to attack\n[S] to block', 25, 1).setOrigin(.5).setAlpha(0)
+        let  p2Text = this.add.bitmapText(game.config.width*7/10, game.config.height/2 + 160, 'reg', '[LEFT] and [RIGHT] to move\n[UP] to attack\n[DOWN] to block', 25, 1).setOrigin(.5).setAlpha(0)
 
         let start = this.add.bitmapText(game.config.width/2, game.config.height - 110, 'reg', '[SPACE] TO FIGHT', 20).setOrigin(.5).setAlpha(0)
 
