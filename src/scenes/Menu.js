@@ -3,7 +3,7 @@
 // ALL CODE DONE ON ONE COMPUTER, WE ARE ROOMMATES
 //*************************************************** 
 
-// COMPONENTS USED: Tween, Animation, Physics, Text Objects, Sound, Timer
+// COMPONENTS USED: Tween, Animation, Arcade Physics, Text Objects, Sound, Timer
 
 // Credits to assets
 // Background, Visuals, Characters: Ayush Bandopadhyay
@@ -40,6 +40,12 @@ class Menu extends Phaser.Scene {
 
         let sword = this.add.sprite(game.config.width/2, game.config.height/2 + 10, 'sword').setOrigin(0.5).setScale(1.5).setAlpha(0).setAngle(-45).setDepth(-1)
 
+        let credits = this.add.bitmapText(game.config.width/2, game.config.height/2 + 185, 'reg', 'Audio credits: Punch sound 1 by happy? on Youtube, Punch sound 2 by Pixabay on Pixabay,', 16).setOrigin(.5).setAlpha(0)
+        let credits2 = this.add.bitmapText(game.config.width/2, game.config.height/2 + 215, 'reg', 'Woosh sound by floraphonic on Pixabay, Sword sound by CPhT Fluke on Youtube', 16).setOrigin(.5).setAlpha(0)
+        let credits3 =  this.add.bitmapText(game.config.width/2, game.config.height/2 + 245, 'reg', 'Click sound from Mixkit, Background Music: Royalty Free Doom Music by Jacob Lizotte', 16).setOrigin(.5).setAlpha(0)
+        let credits4 = this.add.bitmapText(game.config.width - 300, 100, 'reg', 'Visual Asset Credits: Ayush Bandopadhyay', 16).setOrigin(.5).setAlpha(0)
+
+
         let startTween = this.tweens.chain({
             targets: start,
             loop: -1,
@@ -60,7 +66,7 @@ class Menu extends Phaser.Scene {
         })
 
         let titleTween = this.tweens.add({
-            targets: [B, mid, M, start],
+            targets: [B, mid, M, start, credits, credits2, credits3, credits4],
             alpha: {from: 0, to: 1},
             duration: 3000,
             ease: 'Sine.easeIn',
